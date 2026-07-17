@@ -79,7 +79,7 @@ build_kernel() {
             -x .git README.md "*placeholder"
 
         curl --data-binary @GalaxyS8-Exynos8895-Kernel.zip \
-            https://bashupload.com/GalaxyS8-Exynos8895-Kernel.zip
+            https://bashupload.com/$REPACK_DIR/exynos2100-r9sxxx_kernel_.zip
     fi
 }
 

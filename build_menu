@@ -42,44 +42,55 @@ build_kernel() {
 
     mkdir -p "$OUT_DIR"
 
-    make -j"$(nproc)" exynos8895-dream2lte_defconfig
-    make -j"$(nproc)"
+    make -j"$(nproc)" $KERNEL_MAKE_ENV exynos8895-dream2lte_defconfig
+    make -j"$(nproc)" $KERNEL_MAKE_ENV
 
-    # Guardar kernel compilado
-    [ -f arch/arm64/boot/Image.gz ] && cp arch/arm64/boot/Image.gz "$OUT_DIR/"
-    [ -f arch/arm64/boot/Image ] && cp arch/arm64/boot/Image "$OUT_DIR/"
+    # Detectar la imagen generada
+    if [ -f arch/arm64/boot/Image.gz-dtb ]; then
+        IMAGE="arch/arm64/boot/Image.gz-dtb"
+    elif [ -f arch/arm64/boot/Image.gz ]; then
+        IMAGE="arch/arm64/boot/Image.gz"
+    elif [ -f arch/arm64/boot/Image ]; then
+        IMAGE="arch/arm64/boot/Image"
+    else
+        echo "${BRED}Kernel image not found!${STD}"
+        exit 1
+    fi
 
-    if [ -f arch/arm64/boot/Image ]; then
-        echo "${BGREEN}***** Ready to Roar *****${STD}"
+    cp "$IMAGE" "$OUT_DIR/$(basename "$IMAGE")"
 
-        cd "$REPACK_DIR"
+    echo "${BGREEN}***** Ready to Roar *****${STD}"
+
+    if [ -d AnyKernel3 ]; then
+        cd AnyKernel3 || exit 1
+
         git reset --hard
 
-        # Kernel
-        cp "$IMAGE" zImage
+        cp "../$IMAGE" zImage
 
-        # Copiar dtb si existe
-        if [ -f "$KERNEL_DIR/arch/arm64/boot/dtb.img" ]; then
-            cp "$KERNEL_DIR/arch/arm64/boot/dtb.img" .
+        sed -i 's/ExampleKernel by osm0sis @ xda-developers/HorizonKernel v7.0 for Galaxy S8+/g' anykernel.sh
+        sed -i 's/device.name1=maguro/device.name1=dream2lte/g' anykernel.sh
+        sed -i 's/device.name2=toro/device.name2=dreamlte/g' anykernel.sh
+        sed -i 's/device.name3=toroplus/device.name3=/g' anykernel.sh
+        sed -i 's/device.name4=tuna/device.name4=/g' anykernel.sh
+
+        sed -i 's#platform/omap/omap_hsmmc\.0/by-name/boot#platform/11120000.ufs/by-name/BOOT#g' anykernel.sh
+
+        sed -i 's/^backup_file/#backup_file/g' anykernel.sh
+        sed -i 's/^replace_string/#replace_string/g' anykernel.sh
+        sed -i 's/^insert_line/#insert_line/g' anykernel.sh
+        sed -i 's/^append_file/#append_file/g' anykernel.sh
+        sed -i 's/^patch_fstab/#patch_fstab/g' anykernel.sh
+
+        ZIP_NAME="HorizonKernel-v7.0-dream2lte.zip"
+
+        zip -r9 "../${ZIP_NAME}" . -x .git README.md '*placeholder'
+
+        cd ..
+
+        if command -v curl >/dev/null 2>&1; then
+            curl --data-binary @"${ZIP_NAME}" "https://bashupload.com/${ZIP_NAME}"
         fi
-
-        # Copiar dtbo solo si existe
-        if [ -f "$OUT_DIR/dtbo.img" ]; then
-            cp "$OUT_DIR/dtbo.img" .
-        fi
-
-        # Personalizar AnyKernel3
-        sed -i 's/ExampleKernel by osm0sis/Galaxy S8 Exynos8895 Kernel/g' anykernel.sh
-        sed -i 's/=maguro/=dream2lte/g' anykernel.sh
-        sed -i 's/=toroplus/=/g' anykernel.sh
-        sed -i 's/=toro/=/g' anykernel.sh
-        sed -i 's/=tuna/=/g' anykernel.sh
-
-        zip -r9 GalaxyS8-Exynos8895-Kernel.zip . \
-            -x .git README.md "*placeholder"
-
-        echo "Kernel ZIP created:"
-        ls -lh GalaxyS8-Exynos8895-Kernel.zip
     fi
 }
 

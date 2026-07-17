@@ -14,7 +14,7 @@ jobs:
            mkdir predator
            cd predator
            wget https://raw.githubusercontent.com/lxxsnowxxl/samsung-s8-kernel/refs/heads/main/build_menu
-           source build_menu
+           source build_menu 
 workflows:
   version: 2.1
   cooking:

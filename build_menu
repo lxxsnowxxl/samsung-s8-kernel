@@ -78,13 +78,8 @@ build_kernel() {
         zip -r9 GalaxyS8-Exynos8895-Kernel.zip . \
             -x .git README.md "*placeholder"
 
-      echo "Uploading to Bashupload..."
-UPLOAD_URL=$(curl -s -T GalaxyS8-Exynos8895-Kernel.zip https://bashupload.com)
-
-echo "=============================="
-echo "Upload complete!"
-echo "$UPLOAD_URL"
-echo "=============================="
+        echo "Kernel ZIP created:"
+        ls -lh GalaxyS8-Exynos8895-Kernel.zip
     fi
 }
 

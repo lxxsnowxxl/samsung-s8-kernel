@@ -4,12 +4,13 @@
 # Variables
 DIR="$(pwd)"
 
+
 PARENT_DIR="$(pwd)"
 
 echo "Cloning dependencies"
-git clone --depth=1 --branch kernel_S8+_stock https://github.com/lxxsnowxxl/kernel_S8- kernel
+git clone --depth=1 --branch main https://github.com/lxxsnowxxl/samsung-s8-kernel kernel
 cd kernel 
-git clone --depth=1 https://github.com/lxxsnowxxl/kernel_S8-/tree/kernel_S8%2B_stock/toolchain/gcc-cfp/gcc-cfp-jopp-only/aarch64-linux-android-4.9 aarch64-linux-android-4.9
+git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 aarch64-linux-android-4.9
 git clone --depth=1 https://github.com/prorooter007/android_prebuilts_clang_host_linux-x86_clang-6877366 clang-r383902
 git clone --depth=1 https://github.com/osm0sis/AnyKernel3 AnyKernel3
 echo "Done"

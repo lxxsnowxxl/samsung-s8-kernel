@@ -11,7 +11,7 @@ echo "Cloning dependencies"
 git clone --depth=1 --branch main https://github.com/lxxsnowxxl/samsung-s8-kernel kernel
 cd kernel 
 git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 aarch64-linux-android-4.9
-git clone --depth=1 -b clang-r346389c https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 clang-r346389c
+git clone --depth=1 -b android10-release https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/%2B/refs/heads/android10-release/clang-r353983c/?utm_source=chatgpt.com clang
 git clone --depth=1 https://github.com/lxxsnowxxl/anyker anyker
 echo "Done"
 KERNEL_DIR=$(pwd)
@@ -25,8 +25,8 @@ export ANDROID_MAJOR_VERSION=p
 export ARCH=arm64
 export CROSS_COMPILE="$(pwd)/aarch64-linux-android-4.9/bin/aarch64-linux-android-"
 export LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN="$(pwd)/aarch64-linux-android-4.9/bin"
-export CLANG_TRIPLE="$(pwd)/clang-r346389c/bin/aarch64-linux-gnu-"
-export CLANG_PREBUILT_BIN="$(pwd)/clang-r346389c/bin"
+export CLANG_TRIPLE="$(pwd)/clang/bin/aarch64-linux-gnu-"
+export CLANG_PREBUILT_BIN="$(pwd)/clang/bin"
 export PATH=$PATH:$CLANG_PREBUILT_BIN:$LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN
 
 # Color

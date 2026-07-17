@@ -61,7 +61,7 @@ build_kernel() {
 
     echo "${BGREEN}***** Ready to Roar *****${STD}"
 
-    if [ -d AnyKernel3 ]; then
+    if [ -d anyker ]; then
         cd anyker || exit 1
 
         git reset --hard

@@ -1,27 +1,43 @@
 version: 2.1
+
 jobs:
   compile:
-   docker:
+    docker:
       - image: ubuntu:20.04
-   steps:
+
+    steps:
       - run:
           command: |
-           apt-get -y update && apt-get -y upgrade && apt-get -y install bc build-essential zip curl libstdc++6 git wget gcc clang libssl-dev rsync flex bison cpio libncurses5 curl python-is-python3
-           git config --global user.name "prorooter007"
-           git config --global user.email "shreyashwasnik112@gmail.com"
-           git config --global color.ui false
-           git clone https://github.com/akhilnarang/scripts && cd scripts && bash setup/android_build_env.sh && cd ..
-           mkdir predator
-           cd predator
-           wget https://raw.githubusercontent.com/lxxsnowxxl/samsung-s8-kernel/refs/heads/main/build_menu
-           source build_menu 
-  - store_artifacts:
+            apt-get -y update && apt-get -y upgrade
+            apt-get -y install bc build-essential zip curl libstdc++6 git wget gcc clang libssl-dev rsync flex bison cpio libncurses5 python-is-python3
+
+            git config --global user.name "prorooter007"
+            git config --global user.email "shreyashwasnik112@gmail.com"
+            git config --global color.ui false
+
+            git clone https://github.com/akhilnarang/scripts
+            cd scripts
+            bash setup/android_build_env.sh
+            cd ..
+
+            mkdir predator
+            cd predator
+
+            wget https://raw.githubusercontent.com/lxxsnowxxl/samsung-s8-kernel/refs/heads/main/build_menu
+            source build_menu
+
+      - run:
+          name: Check kernel output
+          command: |
+            find . -name "GalaxyS8-Exynos8895-Kernel.zip"
+
+      - store_artifacts:
           path: predator/kernel/AnyKernel3/GalaxyS8-Exynos8895-Kernel.zip
           destination: GalaxyS8-Exynos8895-Kernel.zip
 
-
 workflows:
   version: 2.1
+
   cooking:
     jobs:
       - compile

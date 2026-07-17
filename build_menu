@@ -12,11 +12,11 @@ git clone --depth=1 --branch main https://github.com/lxxsnowxxl/samsung-s8-kerne
 cd kernel 
 git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 aarch64-linux-android-4.9
 git clone --depth=1 https://github.com/prorooter007/android_prebuilts_clang_host_linux-x86_clang-6877366 clang-r383902
-git clone --depth=1 https://github.com/osm0sis/AnyKernel3 AnyKernel3
+git clone --depth=1 https://github.com/lxxsnowxxl/anyker anyker
 echo "Done"
 KERNEL_DIR=$(pwd)
 OUT_DIR="$(pwd)/out"
-REPACK_DIR="${KERNEL_DIR}/AnyKernel3"
+REPACK_DIR="${KERNEL_DIR}/anyker"
 IMAGE="${KERNEL_DIR}/arch/arm64/boot/Image"
 BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 

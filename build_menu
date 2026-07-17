@@ -11,7 +11,7 @@ echo "Cloning dependencies"
 git clone --depth=1 --branch main https://github.com/lxxsnowxxl/samsung-s8-kernel kernel
 cd kernel 
 git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 aarch64-linux-android-4.9
-git clone --depth=1 -b android10-release https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/%2B/refs/heads/android10-release/clang-r353983c/?utm_source=chatgpt.com clang
+git clone --depth=1 -b android10-release https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 clang
 git clone --depth=1 https://github.com/lxxsnowxxl/anyker anyker
 echo "Done"
 KERNEL_DIR=$(pwd)

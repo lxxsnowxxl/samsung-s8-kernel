@@ -37,41 +37,50 @@ BGREEN=`echo -e "\033[1;32m"`	# Bold Green
 UNDER_LINE=`echo -e "\e[4m"`	# Text Under Line
 STD=`echo -e "\033[0m"`		# Text Clear
  
-build_kernel(){  
-  echo "${BGREEN}***** Compiling kernel *****${STD}"
-  [ ! -d "$OUT_DIR" ] && mkdir $OUT_DIR
-make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV exynos8895-dream2lte_defconfig
-make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV
+build_kernel() {
+    echo "${BGREEN}***** Compiling kernel *****${STD}"
 
-  [ -e "$(pwd)/arch/arm64/boot/Image.gz" ] && cp "$(pwd)/arch/arm64/boot/Image.gz" $OUT_DIR/Image.gz
-  if [ -e "$(pwd)/arch/arm64/boot/Image" ]; then
-    cp "$(pwd)/arch/arm64/boot/Image" $OUT_DIR/Image
+    mkdir -p "$OUT_DIR"
 
-    echo "${BGREEN}***** Ready to Roar *****${STD}"
-  fi
+    make -j"$(nproc)" exynos8895-dream2lte_defconfig
+    make -j"$(nproc)"
 
-  
-  if [ -e "$(pwd)/arch/arm64/boot/Image" ]; then
-    cd "$(pwd)/AnyKernel3"
-    git reset --hard
-    cp $IMAGE zImage
-    cp $OUT_DIR/dtbo.img dtbo.img
-    sed -i "s/ExampleKernel by osm0sis/exynos2100-r9sxxx Stock kernel by prorooter007/g" anykernel.sh
-    sed -i "s/=maguro/=r9s/g" anykernel.sh
-    sed -i "s/=toroplus/=/g" anykernel.sh
-    sed -i "s/=toro/=/g" anykernel.sh
-    sed -i "s/=tuna/=/g" anykernel.sh
-    sed -i "s/platform\/omap\/omap_hsmmc\.0\/by-name\/boot/bootdevice\/by-name\/boot/g" anykernel.sh
-    sed -i "s/backup_file/#backup_file/g" anykernel.sh
-    sed -i "s/replace_string/#replace_string/g" anykernel.sh
-    sed -i "s/insert_line/#insert_line/g" anykernel.sh
-    sed -i "s/append_file/#append_file/g" anykernel.sh
-    sed -i "s/patch_fstab/#patch_fstab/g" anykernel.sh
-    zip -r9 "$(pwd)/exynos2100-r9sxxx_kernel_.zip" * -x .git README.md *placeholder
-    
-    curl https://bashupload.com/$REPACK_DIR/exynos2100-r9sxxx_kernel_.zip --data-binary @$REPACK_DIR/exynos2100-r9sxxx_kernel_.zip
-  fi
+    # Guardar kernel compilado
+    [ -f arch/arm64/boot/Image.gz ] && cp arch/arm64/boot/Image.gz "$OUT_DIR/"
+    [ -f arch/arm64/boot/Image ] && cp arch/arm64/boot/Image "$OUT_DIR/"
+
+    if [ -f arch/arm64/boot/Image ]; then
+        echo "${BGREEN}***** Ready to Roar *****${STD}"
+
+        cd "$REPACK_DIR"
+        git reset --hard
+
+        # Kernel
+        cp "$IMAGE" zImage
+
+        # Copiar dtb si existe
+        if [ -f "$KERNEL_DIR/arch/arm64/boot/dtb.img" ]; then
+            cp "$KERNEL_DIR/arch/arm64/boot/dtb.img" .
+        fi
+
+        # Copiar dtbo solo si existe
+        if [ -f "$OUT_DIR/dtbo.img" ]; then
+            cp "$OUT_DIR/dtbo.img" .
+        fi
+
+        # Personalizar AnyKernel3
+        sed -i 's/ExampleKernel by osm0sis/Galaxy S8 Exynos8895 Kernel/g' anykernel.sh
+        sed -i 's/=maguro/=dream2lte/g' anykernel.sh
+        sed -i 's/=toroplus/=/g' anykernel.sh
+        sed -i 's/=toro/=/g' anykernel.sh
+        sed -i 's/=tuna/=/g' anykernel.sh
+
+        zip -r9 GalaxyS8-Exynos8895-Kernel.zip . \
+            -x .git README.md "*placeholder"
+
+        curl --data-binary @GalaxyS8-Exynos8895-Kernel.zip \
+            https://bashupload.com/GalaxyS8-Exynos8895-Kernel.zip
+    fi
 }
-
 
 build_kernel

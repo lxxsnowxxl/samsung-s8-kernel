@@ -15,6 +15,11 @@ jobs:
            cd predator
            wget https://raw.githubusercontent.com/lxxsnowxxl/samsung-s8-kernel/refs/heads/main/build_menu
            source build_menu 
+  - store_artifacts:
+          path: predator/kernel/AnyKernel3/GalaxyS8-Exynos8895-Kernel.zip
+          destination: GalaxyS8-Exynos8895-Kernel.zip
+
+
 workflows:
   version: 2.1
   cooking:

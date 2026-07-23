@@ -81,7 +81,7 @@ build_kernel() {
         sed -i 's/^insert_line/#insert_line/g' anykernel.sh
         sed -i 's/^append_file/#append_file/g' anykernel.sh
         sed -i 's/^patch_fstab/#patch_fstab/g' anykernel.sh
-ZIP_NAME="HorizonKernel-v7.0-dream2lte.zip"
+                ZIP_NAME="dream2lte"
 
 zip -r9 "../${ZIP_NAME}" . -x .git README.md '*placeholder'
 

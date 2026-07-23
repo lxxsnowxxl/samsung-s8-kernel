@@ -16,6 +16,12 @@ jobs:
            wget https://raw.githubusercontent.com/lxxsnowxxl/samsung-s8-kernel/refs/heads/main/build_menu
            source build_menu 
 
+      - run:
+         command: |
+           pwd
+           find /root/project -name "dream2lte.zip"
+
+
 
       - store_artifacts:
           path: predator/HorizonKernel-v7.0-dream2lte.zip

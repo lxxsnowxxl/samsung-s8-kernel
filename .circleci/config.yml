@@ -23,8 +23,8 @@ jobs:
  
 
       - store_artifacts:
-            path: /root/project/predator
-            destination: predator
+            path: /root/project/scripts/predator/kernel/HorizonKernel-v7.0-dream2lte.zip
+            destination: HorizonKernel-v7.0-dream2lte.zip
 
 
 workflows:

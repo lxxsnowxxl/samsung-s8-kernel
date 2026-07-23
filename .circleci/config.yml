@@ -16,14 +16,14 @@ jobs:
            wget https://raw.githubusercontent.com/lxxsnowxxl/samsung-s8-kernel/refs/heads/main/build_menu
            source build_menu 
 
-- run:
-    command: |
-      ls -R /root/project
+      - run:
+          command: |
+           ls -R /root/project
+ 
 
-
-- store_artifacts:
-    path: /root/project/predator
-    destination: predator
+      - store_artifacts:
+            path: /root/project/predator
+            destination: predator
 
 
 workflows:

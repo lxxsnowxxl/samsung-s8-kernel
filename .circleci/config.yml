@@ -17,12 +17,9 @@ jobs:
            source build_menu 
 
 - run:
-    name: Buscar ZIP generado
     command: |
-      echo "Estoy en:"
-      pwd
-      echo
-      find /root/project -type f -name "*.zip"
+      ls -R /root/project
+
 
 - store_artifacts:
     path: /root/project/predator

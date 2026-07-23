@@ -17,8 +17,9 @@ jobs:
            source build_menu 
 
       - run:
+          name: Buscar kernel zip
           command: |
-           ls -R /root/project
+           find /root/project -name "HorizonKernel-v7.0-dream2lte.zip"
  
 
       - store_artifacts:

@@ -16,16 +16,18 @@ jobs:
            wget https://raw.githubusercontent.com/lxxsnowxxl/samsung-s8-kernel/refs/heads/main/build_menu
            source build_menu 
 
-      - run:
-         command: |
-           pwd
-           find /root/project -name "dream2lte.zip"
+- run:
+    name: Buscar ZIP generado
+    command: |
+      echo "Estoy en:"
+      pwd
+      echo
+      find /root/project -type f -name "*.zip"
 
+- store_artifacts:
+    path: /root/project/predator
+    destination: predator
 
-
-      - store_artifacts:
-          path: predator/HorizonKernel-v7.0-dream2lte.zip
-          destination: HorizonKernel-v7.0-dream2lte.zip
 
 workflows:
   version: 2.1

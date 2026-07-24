@@ -48,7 +48,7 @@ build_kernel(){
     cp "$(pwd)/arch/arm64/boot/Image" $OUT_DIR/Image
 
     DTB_DIR=$(pwd)/arch/arm64/boot/dts
-    $(pwd)/tools/mkdtimg cfg_create $(pwd)/out/dtb.img dt.configs/exynos8895.cfg -d ${DTB_DIR}/exynos
+    $(pwd)/tools/dtbtool cfg_create $(pwd)/out/dtb.img dt.configs/exynos8895.cfg -d ${DTB_DIR}/exynos
   fi
 
 
